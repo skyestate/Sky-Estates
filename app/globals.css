@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Inter', system-ui, sans-serif;
+    /* Hauteur du header fixe — sert aussi de décalage d'ancre au scroll. */
+    --header-h: 76px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Les ancres (#services, #tarifs…) ne passent pas sous le header fixe. */
+    scroll-padding-top: var(--header-h);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-ink font-sans text-ivory antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  /*
+   * Grain filmique : casse l'aplat des grands fonds sombres et des dégradés,
+   * qui sinon montrent des bandes de compression sur les écrans 8 bits.
+   * Très faible opacité, non cliquable, au-dessus de tout.
+   */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body::after { opacity: 0.02; }
+  }
+
+  /* Titres : serif fine, interlettrage resserré, casse naturelle. */
+  h1, h2, h3 {
+    @apply font-serif font-light;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'onum' 1;
+  }
+
+  ::selection {
+    @apply bg-champagne text-ink;
+  }
+
+  /* Anneau de focus visible au clavier uniquement — accessibilité. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-champagne ring-offset-2 ring-offset-ink;
+  }
+
+  /* Respect strict de la préférence système « moins d'animations ». */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /*
+   * Échelles fluides : la taille suit la largeur de l'écran en continu, au lieu
+   * de sauter aux points de rupture. Chaque niveau porte SON interligne et SON
+   * interlettrage — c'est indispensable en serif fine : à 60 px, un interligne
+   * de 1,0 fait se toucher les jambages d'un titre sur deux lignes.
+   */
+  .display-hero {
+    font-size: clamp(2.9rem, 7.2vw, 6.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.022em;
+  }
+  .display-section {
+    font-size: clamp(2.1rem, 4.4vw, 3.85rem);
+    line-height: 1.08;
+    letter-spacing: -0.016em;
+  }
+  .display-card {
+    font-size: clamp(1.35rem, 1.9vw, 1.85rem);
+    line-height: 1.2;
+    letter-spacing: -0.008em;
+  }
+  /* Chapô : plus grand et plus aéré que le texte courant. */
+  .lede {
+    font-size: clamp(1rem, 1.1vw, 1.135rem);
+    line-height: 1.72;
+  }
+
+  /* Conteneur horizontal commun à toutes les sections. */
+  .container-page {
+    @apply mx-auto w-full max-w-content px-6 sm:px-8 lg:px-12;
+  }
+
+  /* Petit label en capitales au-dessus des titres de section. */
+  .eyebrow {
+    @apply font-sans text-[11px] uppercase tracking-eyebrow text-champagne;
+  }
+
+  /* Bouton principal — fond champagne, le seul élément plein du site. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-control bg-champagne px-8 py-4
+           font-sans text-[11.5px] uppercase tracking-wide2 text-ink
+           transition-all duration-500 ease-luxe
+           hover:-translate-y-0.5 hover:bg-champagne-light
+           hover:shadow-[0_14px_34px_-12px_rgba(197,165,114,0.55)]
+           active:translate-y-0 active:scale-[0.985];
+  }
+
+  /* Bouton secondaire — contour fin, se remplit au survol. */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-control border border-ivory/30 px-8 py-4
+           font-sans text-[11.5px] uppercase tracking-wide2 text-ivory
+           transition-all duration-500 ease-luxe
+           hover:-translate-y-0.5 hover:border-champagne hover:bg-champagne/5
+           hover:text-champagne active:translate-y-0 active:scale-[0.985];
+  }
+
+  /* Lien de navigation avec soulignement qui se déploie au survol. */
+  .nav-link {
+    @apply relative font-sans text-[13px] tracking-wide2 text-ivory/75
+           transition-colors duration-300 hover:text-ivory;
+  }
+  .nav-link::after {
+    content: '';
+    @apply absolute -bottom-1 left-0 h-px w-0 bg-champagne transition-all duration-500 ease-luxe;
+  }
+  .nav-link:hover::after { @apply w-full; }
+
+  /* Section en cours de lecture : le lien s'allume et garde son soulignement. */
+  .nav-link-active { @apply text-champagne; }
+  .nav-link-active::after { @apply w-full bg-champagne; }
+
+  /* Filet horizontal décoratif, dégradé vers la transparence. */
+  .hairline {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-ivory/15 to-transparent;
+  }
+}
+
+@layer utilities {
+  /* Masque le contenu visuellement sans le retirer aux lecteurs d'écran. */
+  .sr-only-focusable:not(:focus) {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /*
+   * Voile pour un fond image ou vidéo en plein écran.
+   * Deux couches : un dégradé latéral qui assombrit le côté du texte sans
+   * ternir l'image à droite, et un dégradé vertical qui dégage le header en
+   * haut et la bascule vers la section suivante en bas.
+   * Deux couches : un dégradé latéral qui assombrit le côté du texte sans
+   * ternir l'image à droite, et un dégradé vertical qui dégage le header et
+   * la bascule vers la section suivante. Indispensable ici : les façades
+   * blanches des villas feraient disparaître le titre sans lui.
+   *
+   * Les deux couches se multiplient : opacité perçue = 1 − (1−a1)(1−a2).
+   * Les deux couches se multiplient : opacité perçue = 1 − (1−a1)(1−a2).
+   * Côté texte  : 1 − (1−0,62)(1−0,14) = 0,67 → titre blanc lisible sur la
+   *               végétation et les toitures claires.
+   * Côté droit  : 1 − (1−0,04)(1−0,14) = 0,17 → la vallée et la mer gardent
+   *               leur lumière, c'est ce qui porte l'image.
+   */
+  .overlay-cinema {
+    background:
+      linear-gradient(to right, rgba(10,10,10,0.62) 0%, rgba(10,10,10,0.32) 50%, rgba(10,10,10,0.04) 100%),
+      linear-gradient(to bottom, rgba(10,10,10,0.42) 0%, rgba(10,10,10,0.14) 38%, rgba(10,10,10,0.74) 100%);
+  }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
