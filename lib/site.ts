@@ -52,27 +52,34 @@ export const site = {
   },
 } as const;
 
+/** Domaine de production, acheté et rattaché au projet Vercel. */
+const DOMAINE_PRODUCTION = 'https://skyestates.es';
+
 /**
  * URL canonique du site.
  *
- * ⚠️ Cette valeur alimente `metadataBase: new URL(siteUrl)` dans le layout.
- *    `new URL()` lève une exception sur une chaîne mal formée — par exemple
- *    « skyestates.es » sans protocole — et fait alors échouer le prerender de
- *    toutes les pages, avec un message masqué en production. On ne laisse donc
- *    jamais une valeur d'environnement arriver brute jusqu'à `new URL()`.
+ * Elle alimente `metadataBase`, les URL canoniques, les alternates `hreflang`,
+ * le sitemap, le robots.txt et le balisage JSON-LD.
  *
- * Ordre de préférence :
- *   1. NEXT_PUBLIC_SITE_URL, une fois normalisée et validée
- *   2. le domaine de production Vercel, puis celui du déploiement courant —
- *      ce qui donne des URL canoniques justes tant qu'aucun domaine n'est acheté
- *   3. le domaine par défaut
+ * ⚠️ Le domaine de production passe AVANT les variables Vercel. Sur Vercel,
+ *    VERCEL_PROJECT_PRODUCTION_URL est toujours renseignée : la laisser en
+ *    tête ferait pointer toutes les URL canoniques vers *.vercel.app, et
+ *    Google indexerait ce domaine-là plutôt que skyestates.es.
+ *
+ * ⚠️ `new URL()` lève une exception sur une chaîne mal formée — « skyestates.es »
+ *    sans protocole, par exemple — et ferait alors échouer le prerender de
+ *    toutes les pages. Aucune valeur d'environnement n'arrive donc brute
+ *    jusqu'à `new URL()`.
+ *
+ * Ordre : surcharge explicite, puis le domaine de production, puis l'URL du
+ * déploiement Vercel en dernier recours (utile en préproduction).
  */
 function resoudreUrlDuSite(): string {
   const candidats = [
     process.env.NEXT_PUBLIC_SITE_URL,
+    DOMAINE_PRODUCTION,
     process.env.VERCEL_PROJECT_PRODUCTION_URL,
     process.env.VERCEL_URL,
-    'https://skyestates.es',
   ];
 
   for (const candidat of candidats) {
@@ -88,7 +95,7 @@ function resoudreUrlDuSite(): string {
     }
   }
 
-  return 'https://skyestates.es';
+  return DOMAINE_PRODUCTION;
 }
 
 export const siteUrl = resoudreUrlDuSite();
