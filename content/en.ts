@@ -304,6 +304,9 @@ const en: Dictionary = {
       errorBody:
         'The form could not be submitted. Message us on WhatsApp instead — the answer will be just as fast.',
       fallbackCta: 'Message on WhatsApp',
+      whatsappTitle: 'Let’s finish on WhatsApp',
+      whatsappBody:
+        'Your request is ready: the button below opens WhatsApp with everything you filled in already written out. All you have to do is send it — usually answered within the hour.',
       whatsappPrefill:
         'Hello Sky Estates, I would like a quote for a drone shoot. Here is my property: ',
       selectPlaceholder: 'Select…',

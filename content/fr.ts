@@ -309,6 +309,9 @@ const fr: Dictionary = {
       errorBody:
         'Le formulaire n’a pas pu être transmis. Écrivez-nous directement sur WhatsApp, la réponse sera aussi rapide.',
       fallbackCta: 'Écrire sur WhatsApp',
+      whatsappTitle: 'Terminons sur WhatsApp',
+      whatsappBody:
+        'Votre demande est prête : le bouton ci-dessous ouvre WhatsApp avec toutes vos informations déjà saisies. Il ne vous reste qu’à l’envoyer — réponse en général sous une heure.',
       whatsappPrefill:
         'Bonjour Sky Estates, je souhaite un devis pour une prise de vue drone. Voici mon bien : ',
       selectPlaceholder: 'Sélectionner…',

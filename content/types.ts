@@ -184,6 +184,9 @@ export type Dictionary = {
       errorTitle: string;
       errorBody: string;
       fallbackCta: string;
+      /** Affiché quand l'envoi par e-mail n'est pas configuré côté serveur. */
+      whatsappTitle: string;
+      whatsappBody: string;
       /** Message pré-rempli du lien WhatsApp de repli. */
       whatsappPrefill: string;
       selectPlaceholder: string;

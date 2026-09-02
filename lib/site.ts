@@ -14,18 +14,28 @@ export const site = {
 
   email: 'skyestates0@gmail.com',
 
-  instagramHandle: '@skybyview_aerial',
-  instagram: 'https://instagram.com/skybyview_aerial',
+  instagramHandle: '@skyestates_aerial',
+  instagram: 'https://instagram.com/skyestates_aerial',
 
   // Zone d'intervention
   city: 'Marbella',
   region: 'Costa del Sol',
   country: 'ES',
-  areas: ['Marbella', 'Puerto Banús', 'Benahavís', 'Estepona', 'Nueva Andalucía'],
+  areas: [
+    'Marbella',
+    'Puerto Banús',
+    'Nueva Andalucía',
+    'San Pedro de Alcántara',
+    'Benahavís',
+    'Estepona',
+    'Sotogrande',
+    'Mijas',
+    'Fuengirola',
+  ],
 
   // Coordonnées géographiques de Marbella — utilisées par le JSON-LD LocalBusiness
   geo: { lat: 36.5101, lng: -4.8825 },
-  serviceRadiusKm: 40,
+  serviceRadiusKm: 50,
 
   /*
    * Informations légales espagnoles.

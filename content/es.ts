@@ -305,6 +305,9 @@ const es: Dictionary = {
       errorBody:
         'No se ha podido enviar el formulario. Escríbenos por WhatsApp, la respuesta será igual de rápida.',
       fallbackCta: 'Escribir por WhatsApp',
+      whatsappTitle: 'Terminemos por WhatsApp',
+      whatsappBody:
+        'Tu solicitud está lista: el botón de abajo abre WhatsApp con todos tus datos ya escritos. Solo tienes que enviarlo — normalmente respondemos en menos de una hora.',
       whatsappPrefill:
         'Hola Sky Estates, quisiera un presupuesto para una grabación con dron. Mi propiedad: ',
       selectPlaceholder: 'Seleccionar…',

@@ -11,7 +11,7 @@ import type { Locale } from '@/lib/i18n';
 import { site, whatsappLink } from '@/lib/site';
 import { cn } from '@/lib/utils';
 
-type Status = 'idle' | 'sending' | 'success' | 'error';
+type Status = 'idle' | 'sending' | 'success' | 'error' | 'whatsapp';
 
 /**
  * Formulaire de devis.
@@ -23,6 +23,7 @@ export default function Contact({ locale, dict }: { locale: Locale; dict: Dictio
   const [status, setStatus] = useState<Status>('idle');
   const [services, setServices] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [prefill, setPrefill] = useState<string>(t.whatsappPrefill);
 
   const toggleService = (value: string) =>
     setServices((prev) =>
@@ -43,6 +44,31 @@ export default function Contact({ locale, dict }: { locale: Locale; dict: Dictio
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
+    /*
+     * Message WhatsApp reprenant la saisie, avec les libellés traduits.
+     * Il sert de secours : si l'envoi par e-mail n'est pas disponible, le
+     * visiteur n'a rien à ressaisir.
+     */
+    const recapitulatif = () => {
+      const typeBien = t.propertyTypes.find((o) => o.value === data.propertyType)?.label;
+      const prestations = services
+        .map((v) => t.serviceOptions.find((o) => o.value === v)?.label)
+        .filter(Boolean)
+        .join(', ');
+      const lignes = [
+        `${t.name}: ${data.name}`,
+        `${t.email}: ${data.email}`,
+        data.phone ? `${t.phone}: ${data.phone}` : null,
+        typeBien ? `${t.propertyType}: ${typeBien}` : null,
+        `${t.address}: ${data.address}`,
+        data.surface ? `${t.surface}: ${data.surface}` : null,
+        prestations ? `${t.services}: ${prestations}` : null,
+        data.date ? `${t.date}: ${data.date}` : null,
+        data.message ? `${t.message}: ${data.message}` : null,
+      ].filter(Boolean);
+      return `${t.whatsappPrefill}\n\n${lignes.join('\n')}`;
+    };
+
     setStatus('sending');
     try {
       const response = await fetch('/api/contact', {
@@ -50,11 +76,27 @@ export default function Contact({ locale, dict }: { locale: Locale; dict: Dictio
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...data, services, locale }),
       });
-      if (!response.ok) throw new Error('Request failed');
-      setStatus('success');
-      form.reset();
-      setServices([]);
+      if (response.ok) {
+        setStatus('success');
+        form.reset();
+        setServices([]);
+        return;
+      }
+
+      /*
+       * 503 = l'envoi par e-mail n'est pas configuré sur le serveur.
+       * Ce n'est pas une panne : on bascule sur WhatsApp sans afficher
+       * d'erreur, avec le message déjà rédigé.
+       */
+      if (response.status === 503) {
+        setPrefill(recapitulatif());
+        setStatus('whatsapp');
+        return;
+      }
+
+      throw new Error('Request failed');
     } catch {
+      setPrefill(recapitulatif());
       setStatus('error');
     }
   }
@@ -73,7 +115,30 @@ export default function Contact({ locale, dict }: { locale: Locale; dict: Dictio
           {/* ── Formulaire ─────────────────────────────────────────────── */}
           <div>
             <AnimatePresence mode="wait">
-              {status === 'success' ? (
+              {status === 'whatsapp' ? (
+                <motion.div
+                  key="whatsapp"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="rounded-card border border-champagne/50 bg-charcoal p-10 text-center"
+                >
+                  <svg viewBox="0 0 24 24" className="mx-auto h-11 w-11 fill-champagne" aria-hidden="true">
+                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.24 8.23Z" />
+                  </svg>
+                  <h3 className="mt-6 font-serif text-2xl text-ivory">{t.whatsappTitle}</h3>
+                  <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-smoke">
+                    {t.whatsappBody}
+                  </p>
+                  <a
+                    href={whatsappLink(prefill)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary mt-7"
+                  >
+                    {t.fallbackCta}
+                  </a>
+                </motion.div>
+              ) : status === 'success' ? (
                 <motion.div
                   key="success"
                   initial={{ opacity: 0, y: 12 }}
@@ -197,7 +262,7 @@ export default function Contact({ locale, dict }: { locale: Locale; dict: Dictio
                       <p className="font-serif text-lg text-ivory">{t.errorTitle}</p>
                       <p className="mt-2 text-sm text-smoke">{t.errorBody}</p>
                       <a
-                        href={whatsappLink(t.whatsappPrefill)}
+                        href={whatsappLink(prefill)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn-primary mt-5"
