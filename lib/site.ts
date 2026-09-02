@@ -42,8 +42,46 @@ export const site = {
   },
 } as const;
 
-/** URL canonique du site (surchargée par NEXT_PUBLIC_SITE_URL en production). */
-export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://skyestates.es').replace(/\/$/, '');
+/**
+ * URL canonique du site.
+ *
+ * ⚠️ Cette valeur alimente `metadataBase: new URL(siteUrl)` dans le layout.
+ *    `new URL()` lève une exception sur une chaîne mal formée — par exemple
+ *    « skyestates.es » sans protocole — et fait alors échouer le prerender de
+ *    toutes les pages, avec un message masqué en production. On ne laisse donc
+ *    jamais une valeur d'environnement arriver brute jusqu'à `new URL()`.
+ *
+ * Ordre de préférence :
+ *   1. NEXT_PUBLIC_SITE_URL, une fois normalisée et validée
+ *   2. le domaine de production Vercel, puis celui du déploiement courant —
+ *      ce qui donne des URL canoniques justes tant qu'aucun domaine n'est acheté
+ *   3. le domaine par défaut
+ */
+function resoudreUrlDuSite(): string {
+  const candidats = [
+    process.env.NEXT_PUBLIC_SITE_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+    process.env.VERCEL_URL,
+    'https://skyestates.es',
+  ];
+
+  for (const candidat of candidats) {
+    const valeur = candidat?.trim();
+    if (!valeur) continue;
+    // Vercel fournit ses domaines sans protocole : on le rajoute au besoin.
+    const avecProtocole = /^https?:\/\//i.test(valeur) ? valeur : `https://${valeur}`;
+    try {
+      return new URL(avecProtocole).origin;
+    } catch {
+      // Valeur inexploitable : on passe au candidat suivant plutôt que
+      // de laisser l'erreur remonter et casser la compilation.
+    }
+  }
+
+  return 'https://skyestates.es';
+}
+
+export const siteUrl = resoudreUrlDuSite();
 
 /** Construit un lien WhatsApp pré-rempli. */
 export function whatsappLink(message: string): string {
