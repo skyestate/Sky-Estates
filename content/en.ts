@@ -128,6 +128,7 @@ const en: Dictionary = {
         features: [
           '15 retouched aerial images',
           '1 exterior drone film, 45 to 60 s',
+          'Interior FPV tour — one continuous 30 to 60 s take',
           'Vertical 9:16 cut for social media',
           'Delivered within 48 hours',
           'Commercial usage rights included',
@@ -142,6 +143,7 @@ const en: Dictionary = {
         features: [
           '25 retouched aerial images',
           '1 exterior drone film, 60 to 90 s',
+          'Interior FPV tour — one continuous 30 to 60 s take',
           'Vertical 9:16 cut for social media',
           'Garden, pool and surroundings coverage',
           'Delivered within 48 hours',
@@ -156,6 +158,7 @@ const en: Dictionary = {
         features: [
           '40 retouched aerial images',
           '1 exterior drone film, 90 s to 2 min',
+          'Interior FPV tour — one continuous 30 to 60 s take',
           'Vertical 9:16 cut for social media',
           'Full coverage of the grounds and exteriors',
           'Golden-hour shoot when conditions allow',
@@ -164,11 +167,6 @@ const en: Dictionary = {
         ],
       },
     ],
-    option: {
-      title: 'Add-on — Interior FPV video',
-      description: 'Add an immersive one-take flight through the property to any package.',
-      price: '+€100 to €150',
-    },
     note: 'Bespoke quote for landmark properties or specific requirements.',
     cta: 'Book this package',
   },

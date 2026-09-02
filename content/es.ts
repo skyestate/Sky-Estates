@@ -128,6 +128,7 @@ const es: Dictionary = {
         features: [
           '15 fotos aéreas retocadas',
           '1 vídeo exterior con dron de 45 a 60 s',
+          'Recorrido FPV interior — plano secuencia de 30 a 60 s',
           'Versión vertical 9:16 para redes',
           'Entrega en 48 horas',
           'Derechos de uso comercial incluidos',
@@ -142,6 +143,7 @@ const es: Dictionary = {
         features: [
           '25 fotos aéreas retocadas',
           '1 vídeo exterior con dron de 60 a 90 s',
+          'Recorrido FPV interior — plano secuencia de 30 a 60 s',
           'Versión vertical 9:16 para redes',
           'Cobertura del jardín, la piscina y el entorno',
           'Entrega en 48 horas',
@@ -156,6 +158,7 @@ const es: Dictionary = {
         features: [
           '40 fotos aéreas retocadas',
           '1 vídeo exterior con dron de 90 s a 2 min',
+          'Recorrido FPV interior — plano secuencia de 30 a 60 s',
           'Versión vertical 9:16 para redes',
           'Cobertura completa de la finca y los exteriores',
           'Grabación a la golden hour si las condiciones lo permiten',
@@ -164,11 +167,6 @@ const es: Dictionary = {
         ],
       },
     ],
-    option: {
-      title: 'Opción — Vídeo FPV de interior',
-      description: 'Añade un plano secuencia inmersivo por la propiedad a cualquier pack.',
-      price: '+100 a 150 €',
-    },
     note: 'Presupuesto a medida para propiedades excepcionales o necesidades específicas.',
     cta: 'Reservar este pack',
   },

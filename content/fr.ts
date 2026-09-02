@@ -131,6 +131,7 @@ const fr: Dictionary = {
         features: [
           '15 photos aériennes retouchées',
           '1 vidéo drone extérieure de 45 à 60 s',
+          'Visite FPV intérieure — plan-séquence de 30 à 60 s',
           'Version verticale 9:16 pour les réseaux',
           'Livraison sous 48 h',
           'Droits d’utilisation commerciale inclus',
@@ -145,6 +146,7 @@ const fr: Dictionary = {
         features: [
           '25 photos aériennes retouchées',
           '1 vidéo drone extérieure de 60 à 90 s',
+          'Visite FPV intérieure — plan-séquence de 30 à 60 s',
           'Version verticale 9:16 pour les réseaux',
           'Plans du jardin, de la piscine et de l’environnement',
           'Livraison sous 48 h',
@@ -159,6 +161,7 @@ const fr: Dictionary = {
         features: [
           '40 photos aériennes retouchées',
           '1 vidéo drone extérieure de 90 s à 2 min',
+          'Visite FPV intérieure — plan-séquence de 30 à 60 s',
           'Version verticale 9:16 pour les réseaux',
           'Couverture complète du domaine et des extérieurs',
           'Prises de vue à la golden hour si les conditions le permettent',
@@ -167,12 +170,6 @@ const fr: Dictionary = {
         ],
       },
     ],
-    option: {
-      title: 'Option — Vidéo FPV intérieure',
-      description:
-        'Ajoutez un plan-séquence immersif à travers la propriété, sur n’importe quel pack.',
-      price: '+100 à 150 €',
-    },
     note: 'Tarif sur devis pour les propriétés d’exception ou les besoins spécifiques.',
     cta: 'Réserver ce pack',
   },

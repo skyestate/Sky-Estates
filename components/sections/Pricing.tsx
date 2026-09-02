@@ -131,19 +131,6 @@ export default function Pricing({ locale, dict }: { locale: Locale; dict: Dictio
         ))}
       </div>
 
-      {/* Option FPV, transversale aux trois packs */}
-      <Reveal delay={0.15}>
-        <div className="mt-8 flex flex-col items-start justify-between gap-6 rounded-card border border-dashed border-champagne-dark/40 bg-white px-8 py-7 sm:flex-row sm:items-center">
-          <div>
-            <h3 className="font-serif text-xl text-ink">{dict.pricing.option.title}</h3>
-            <p className="mt-1.5 max-w-xl text-sm text-ink/60">{dict.pricing.option.description}</p>
-          </div>
-          <p className="shrink-0 font-serif text-3xl text-champagne-dark">
-            {dict.pricing.option.price}
-          </p>
-        </div>
-      </Reveal>
-
       {/* Note « sur devis » */}
       <Reveal delay={0.2}>
         <p className="mt-8 text-center text-sm italic text-ink/50">{dict.pricing.note}</p>

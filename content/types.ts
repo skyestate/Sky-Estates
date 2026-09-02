@@ -110,7 +110,6 @@ export type Dictionary = {
     from: string;
     featuredLabel: string;
     packs: PricingPack[];
-    option: { title: string; description: string; price: string };
     note: string;
     cta: string;
   };
