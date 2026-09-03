@@ -82,7 +82,7 @@ export const portfolio: PortfolioItem[] = [
     media: [
       {
         src: '/media/portfolio/benahavis-fpv-poster.jpg',
-        video: '/media/portfolio/benahavis-fpv-1080.mp4',
+        video: '/media/portfolio/benahavis-fpv-grade.mp4',
         alt: {
           fr: 'Visite FPV de la Villa Benahavís : approche extérieure, puis traversée des pièces jusqu’à la terrasse',
           en: 'FPV tour of Villa Benahavís: exterior approach, then a flight through the rooms out to the terrace',
