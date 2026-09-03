@@ -52,8 +52,17 @@ export const site = {
   },
 } as const;
 
-/** Domaine de production, acheté et rattaché au projet Vercel. */
-const DOMAINE_PRODUCTION = 'https://skyestates.es';
+/**
+ * Domaine de production.
+ *
+ * ⚠️ Doit correspondre EXACTEMENT au domaine principal configuré dans Vercel.
+ *    Vercel redirige l'apex vers www : déclarer l'apex ici ferait pointer les
+ *    canoniques, le sitemap et le robots.txt vers des URL qui redirigent —
+ *    Google les signale alors en « page avec redirection » et le référencement
+ *    se disperse entre les deux domaines.
+ *    Si tu inverses la redirection dans Vercel, retire le « www. » ici.
+ */
+const DOMAINE_PRODUCTION = 'https://www.skyestates.es';
 
 /**
  * URL canonique du site.

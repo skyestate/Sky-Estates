@@ -32,7 +32,7 @@ const visuals: Record<string, string> = {
  * /public/media/services/ et ajoute une ligne ici avec l'`id` de la prestation.
  */
 const serviceLoops: Record<string, string> = {
-  video: '/media/services/aerial-video-loop-720.mp4',
+  video: '/media/services/aerial-video-loop-1080.mp4',
 };
 
 /**
