@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Media from './Media';
 import type { PortfolioMedia, PortfolioKind } from '@/content/portfolio';
@@ -39,6 +40,18 @@ export default function Lightbox({
   onNavigate,
 }: LightboxProps) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  /*
+   * La visionneuse est rendue dans un portail attaché au <body>.
+   *
+   * ⚠️ Sans cela elle reste prisonnière de son parent. Un ancêtre portant
+   *    `clip-path`, `transform` ou `filter` devient le bloc conteneur des
+   *    éléments `position: fixed` qu'il contient : la visionneuse, appelée
+   *    depuis la vignette d'un bloc animé par Reveal (qui anime un clip-path),
+   *    s'affichait alors confinée dans le cadre de la vignette au lieu de
+   *    couvrir l'écran — vidéo rognée, décentrée, réduite à une portion.
+   */
+  const [monte, setMonte] = useState(false);
+  useEffect(() => setMonte(true), []);
   const videoRef = useRef<HTMLVideoElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
   const isOpen = index !== null;
@@ -89,7 +102,9 @@ export default function Lightbox({
     });
   }, [isOpen, current?.video]);
 
-  return (
+  if (!monte) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && current && (
         <motion.div
@@ -207,6 +222,7 @@ export default function Lightbox({
           </div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }
