@@ -9,7 +9,7 @@ import type { Dictionary } from '@/content/types';
  * Hero plein écran.
  *
  * Fond : image fixe — monogramme SE lumineux sur fond noir.
- *   · /public/media/hero/hero-still.png  (1536×1024)
+ * Le hero est sur fond noir uni : aucun fichier image n'est utilisé.
  *
  * Traitement : `object-contain` plutôt que `cover` — en plein écran vertical,
  * `cover` agrandit démesurément une image 3:2 et le « S » vient traverser le

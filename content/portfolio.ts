@@ -62,7 +62,7 @@ export const portfolio: PortfolioItem[] = [
     aspect: 'landscape',
     media: [
       {
-        src: '/media/portfolio/be-aloha-fpv-poster.jpg',
+        src: '/media/portfolio/be-aloha-poster-droit.jpg',
         video: '/media/portfolio/be-aloha-fpv-1080.mp4',
         alt: {
           fr: 'Visite FPV d’un appartement à Be Aloha : approche des terrasses puis traversée des pièces',

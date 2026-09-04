@@ -22,9 +22,13 @@ import { cn } from '@/lib/utils';
 const visuals: Record<string, string> = {
   photo: '/media/services/aerial-photo.jpg',
   video: '/media/services/aerial-video-poster.jpg',
-  // Image extraite à 58 s de la vidéo Be Aloha : ligne d'horizon droite.
-  // L'ancienne était prise pendant une inclinaison du drone, l'image penchait.
-  fpv: '/media/services/fpv-poster.jpg',
+  /*
+   * ⚠️ Ce visuel n'est pas celui affiché : le bloc FPV rend un VideoThumb, qui
+   *    prend l'image du portfolio (media[0].src de l'entrée « be-aloha »).
+   *    On garde la même valeur ici pour que les deux ne divergent pas si le
+   *    bloc repasse un jour en image fixe.
+   */
+  fpv: '/media/portfolio/be-aloha-poster-droit.jpg',
 };
 
 /**
