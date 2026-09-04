@@ -39,6 +39,7 @@ export default function Lightbox({
   onNavigate,
 }: LightboxProps) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
   const isOpen = index !== null;
   const current = isOpen ? media[index] : null;
@@ -63,6 +64,30 @@ export default function Lightbox({
       previouslyFocused.current?.focus();
     };
   }, [isOpen, index, media.length, onClose, onNavigate]);
+
+  /*
+   * Lecture avec le son.
+   *
+   * L'attribut `autoPlay` seul ne suffit pas : les navigateurs coupent
+   * systématiquement le son d'une vidéo qui démarre d'elle-même. Comme la
+   * visionneuse s'ouvre sur un clic, l'activation utilisateur est récente et
+   * la lecture sonore est presque toujours acceptée — on la demande donc
+   * explicitement, et on ne retombe en muet que si le navigateur refuse,
+   * plutôt que de laisser une vidéo figée.
+   */
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !isOpen) return;
+
+    video.muted = false;
+    video.volume = 1;
+    video.play().catch(() => {
+      video.muted = true;
+      video.play().catch(() => {
+        /* refus total : les contrôles natifs restent disponibles */
+      });
+    });
+  }, [isOpen, current?.video]);
 
   return (
     <AnimatePresence>
@@ -124,11 +149,13 @@ export default function Lightbox({
             >
               {current.video ? (
                 <video
+                  ref={videoRef}
+                  key={current.video}
                   className="max-h-full w-auto max-w-full rounded-card"
                   poster={current.src}
                   controls
-                  autoPlay
                   playsInline
+                  preload="auto"
                   aria-label={current.alt[locale]}
                 >
                   <source src={current.video} type="video/mp4" />

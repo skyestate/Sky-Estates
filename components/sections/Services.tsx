@@ -22,7 +22,9 @@ import { cn } from '@/lib/utils';
 const visuals: Record<string, string> = {
   photo: '/media/services/aerial-photo.jpg',
   video: '/media/services/aerial-video-poster.jpg',
-  fpv: '/media/portfolio/be-aloha-fpv-poster.jpg',
+  // Image extraite à 58 s de la vidéo Be Aloha : ligne d'horizon droite.
+  // L'ancienne était prise pendant une inclinaison du drone, l'image penchait.
+  fpv: '/media/services/fpv-poster.jpg',
 };
 
 /**
