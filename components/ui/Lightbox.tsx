@@ -135,7 +135,13 @@ export default function Lightbox({
             </div>
           </div>
 
-          {/* Média */}
+          {/*
+            Média — occupe toute la zone disponible.
+            ⚠️ Ne pas replafonner la largeur (un max-w-5xl y bridait la vidéo à
+               1024 px) : sur un grand écran elle n'occupait plus qu'un quart de
+               la surface. `object-contain` garantit qu'elle reste entière et
+               centrée, quelle que soit la taille de la fenêtre.
+          */}
           <div
             className="relative flex flex-1 items-center justify-center px-4 pb-8 sm:px-16"
             onClick={(e) => e.stopPropagation()}
@@ -145,13 +151,13 @@ export default function Lightbox({
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex h-full w-full max-w-5xl items-center justify-center"
+              className="relative flex h-full w-full items-center justify-center"
             >
               {current.video ? (
                 <video
                   ref={videoRef}
                   key={current.video}
-                  className="max-h-full w-auto max-w-full rounded-card"
+                  className="h-full w-full rounded-card object-contain"
                   poster={current.src}
                   controls
                   playsInline
