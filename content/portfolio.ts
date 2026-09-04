@@ -63,7 +63,7 @@ export const portfolio: PortfolioItem[] = [
     media: [
       {
         src: '/media/portfolio/be-aloha-fpv-poster.jpg',
-        video: '/media/portfolio/be-aloha-fpv-grade.mp4',
+        video: '/media/portfolio/be-aloha-fpv-1080.mp4',
         alt: {
           fr: 'Visite FPV d’un appartement à Be Aloha : approche des terrasses puis traversée des pièces',
           en: 'FPV tour of an apartment at Be Aloha: terrace approach, then a flight through the rooms',
@@ -82,7 +82,7 @@ export const portfolio: PortfolioItem[] = [
     media: [
       {
         src: '/media/portfolio/benahavis-fpv-poster.jpg',
-        video: '/media/portfolio/benahavis-fpv-grade.mp4',
+        video: '/media/portfolio/benahavis-fpv-musique.mp4',
         alt: {
           fr: 'Visite FPV de la Villa Benahavís : approche extérieure, puis traversée des pièces jusqu’à la terrasse',
           en: 'FPV tour of Villa Benahavís: exterior approach, then a flight through the rooms out to the terrace',
