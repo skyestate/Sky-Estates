@@ -20,13 +20,14 @@ export default function Header({ locale, dict }: { locale: Locale; dict: Diction
   const [menuOpen, setMenuOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
 
+  /* L'ordre doit suivre celui des sections dans app/[locale]/page.tsx. */
   const nav = [
     { href: '#services', label: dict.nav.services },
+    { href: '#about', label: dict.nav.about },
     { href: '#portfolio', label: dict.nav.portfolio },
     { href: '#pricing', label: dict.nav.pricing },
-    { href: '#process', label: dict.nav.process },
     { href: '#sectors', label: dict.nav.sectors },
-    { href: '#about', label: dict.nav.about },
+    { href: '#process', label: dict.nav.process },
   ];
 
   /*
@@ -37,7 +38,7 @@ export default function Header({ locale, dict }: { locale: Locale; dict: Diction
    * considérée « active » alors qu'elle est encore cachée derrière lui.
    */
   useEffect(() => {
-    const ids = ['services', 'portfolio', 'pricing', 'process', 'sectors', 'about', 'contact'];
+    const ids = ['services', 'about', 'portfolio', 'pricing', 'sectors', 'process', 'contact'];
     const cibles = ids
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null);

@@ -9,11 +9,11 @@ export default function Footer({ locale, dict }: { locale: Locale; dict: Diction
 
   const nav = [
     { href: '#services', label: dict.nav.services },
+    { href: '#about', label: dict.nav.about },
     { href: '#portfolio', label: dict.nav.portfolio },
     { href: '#pricing', label: dict.nav.pricing },
-    { href: '#process', label: dict.nav.process },
     { href: '#sectors', label: dict.nav.sectors },
-    { href: '#about', label: dict.nav.about },
+    { href: '#process', label: dict.nav.process },
     { href: '#contact', label: dict.nav.contact },
   ];
 

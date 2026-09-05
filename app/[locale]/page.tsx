@@ -28,12 +28,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <>
       <Hero dict={dict} />
       <Services locale={locale} dict={dict} />
+      <About dict={dict} />
       <Portfolio locale={locale} dict={dict} />
       <Showcase locale={locale} dict={dict} />
       <Pricing locale={locale} dict={dict} />
       <Sectors dict={dict} />
       <Process dict={dict} />
-      <About dict={dict} />
       <Contact locale={locale} dict={dict} />
     </>
   );
